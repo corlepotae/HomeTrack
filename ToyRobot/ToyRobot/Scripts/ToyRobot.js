@@ -1,4 +1,27 @@
-﻿class Robot {
+﻿class RobotManager {
+    constructor(minX, maxX, minY, maxY) {
+        this.surfaceArea =
+            {
+                minX: parseInt(minX),
+                maxX: parseInt(maxX),
+                minY: parseInt(minY),
+                maxY: parseInt(maxY)
+            };
+    }
+
+    executeCommands(commands) {
+        var robot = new Robot();
+        robot.setSurfaceArea(this.surfaceArea.minX, this.surfaceArea.maxX, this.surfaceArea.minY, this.surfaceArea.maxY);
+        if (commands instanceof Array) {
+            for (var command of commands) {
+                robot.executeCommand(command);
+            }
+        }
+        return robot.report();
+    }
+}
+
+class Robot {
     // Implement nested enumerator to make it clear to use
     // this enumerator to set a Robot's facing direction
     static get Direction() {
@@ -17,19 +40,13 @@
         };
     }
 
-    constructor(maxX, maxY, x, y, f) {
+    constructor() {
         // Set maximum and minimum directions the robot can use
         this.minDirection = Robot.Direction.NORTH;
         this.maxDirection = Robot.Direction.WEST;
-
-        // Set surface area for the robot
-        this.setSurfaceArea(maxX, maxY);
-
-        // Place robot to a specific location
-        this.place(x, y, f);
     }
 
-    takeCommand(command) {
+    executeCommand(command) {
         command = command.trim().toUpperCase();
         // Process positioning command
         if (command.includes("PLACE")) {
@@ -39,8 +56,8 @@
             }
 
             var position = commandArgs[1].split(",");
-            var x = Number(position[0].trim());
-            var y = Number(position[1].trim());
+            var x = parseInt(position[0].trim());
+            var y = parseInt(position[1].trim());
             var f = Robot.Direction[position[2].trim()];
             this.place(x, y, f);
         }
@@ -64,7 +81,12 @@
     }
 
     report() {
-        return this.x + "," + this.y + "," + Robot.Direction.GetName(this.f);
+        if (this.hasValidSetup()) {
+            return 'I have no correction direction set up, or proper surface to move on!';
+        }
+        else {
+            return this.x + "," + this.y + "," + Robot.Direction.GetName(this.f);
+        }
     }
 
     place(x, y, f) {
@@ -77,6 +99,10 @@
     }
 
     move(moveCount = 1) {
+        if (this.hasValidSetup()) {
+            return;
+        }
+
         var resultX = this.x;
         var resultY = this.y;
 
@@ -94,24 +120,22 @@
                 resultX -= moveCount;
                 break;
         }
-
         // Prevent robot from move out of surface area
-        if (resultX > this.surfaceArea.X) {
-            resultX = this.surfaceArea.X;
+        if (resultX > this.surfaceArea.maxX) {
+            resultX = this.surfaceArea.maxX;
         }
 
-        if (resultX < 0) {
-            resultX = 0;
+        if (resultX < this.surfaceArea.minX) {
+            resultX = this.surfaceArea.minX;
         }
 
-        if (resultY > this.surfaceArea.Y) {
-            resultY = this.surfaceArea.Y;
+        if (resultY > this.surfaceArea.maxY) {
+            resultY = this.surfaceArea.maxY;
         }
 
-        if (resultY < 0) {
-            resultY = 0;
+        if (resultY < this.surfaceArea.minY) {
+            resultY = this.surfaceArea.minY;
         }
-
         this.x = resultX;
         this.y = resultY;
     }
@@ -125,6 +149,10 @@
     }
 
     turn(turnCount = 1) {
+        if (this.hasValidSetup()) {
+            return;
+        }
+
         // Calculating circular turning direction
         var totalDirections = this.maxDirection + 1;
         var nextDirection = (this.f + turnCount) % totalDirections;
@@ -139,15 +167,26 @@
         }
     }	
 
-    setSurfaceArea(maxX, maxY) {
+    setSurfaceArea(minX, maxX, minY, maxY) {
         // Set surface area if the arguments are all numbers
-        if (!isNaN(maxX) && !isNaN(maxY)) {
+        if (!(isNaN(parseInt(minX)) && isNaN(parseInt(maxX)) && isNaN(parseInt(minY)) && isNaN(parseInt(maxY)))) {
             // Set Surface area
             this.surfaceArea =
                 {
-                    X: maxX,
-                    Y: maxY
+                    minX: minX,
+                    maxX: maxX,
+                    minY: minY,
+                    maxY: maxY
                 };
         }
+    }
+
+    hasValidSetup() {
+        return this.surfaceArea == null
+            || this.f == null
+            || this.x < this.surfaceArea.minX
+            || this.x > this.surfaceArea.maxX
+            || this.y < this.surfaceArea.minX
+            || this.y > this.surfaceArea.maxY;
     }
 }
