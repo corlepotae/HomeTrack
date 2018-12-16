@@ -31,17 +31,36 @@
 
     takeCommand(command) {
         command = command.trim().toUpperCase();
-        switch (command) {
-            case "LEFT":
-                this.turnLeft();
-                break;
-            case "RIGHT":
-                this.turnRight();
-                break;
-            case "REPORT":
-                this.report();
-                break;
-        };
+        // Process positioning command
+        if (command.includes("PLACE")) {
+            var commandArgs = command.split(" ");
+            if (!commandArgs.length > 2) {
+                return;
+            }
+
+            var position = commandArgs[1].split(",");
+            var x = Number(position[0].trim());
+            var y = Number(position[1].trim());
+            var f = Robot.Direction[position[2].trim()];
+            this.place(x, y, f);
+        }
+        // Process movement command
+        else {
+            switch (command) {
+                case "MOVE":
+                    this.move();
+                    break;
+                case "LEFT":
+                    this.turnLeft();
+                    break;
+                case "RIGHT":
+                    this.turnRight();
+                    break;
+                case "REPORT":
+                    this.report();
+                    break;
+            };
+        }
     }
 
     report() {
@@ -55,6 +74,46 @@
         if (f >= this.minDirection && f <= this.maxDirection) {
             this.f = f;
         }
+    }
+
+    move(moveCount = 1) {
+        var resultX = this.x;
+        var resultY = this.y;
+
+        switch (this.f) {
+            case Robot.Direction.NORTH:
+                resultY += moveCount;
+                break;
+            case Robot.Direction.EAST:
+                resultX += moveCount;
+                break;
+            case Robot.Direction.SOUTH:
+                resultY -= moveCount;
+                break;
+            case Robot.Direction.WEST:
+                resultX -= moveCount;
+                break;
+        }
+
+        // Prevent robot from move out of surface area
+        if (resultX > this.surfaceArea.X) {
+            resultX = this.surfaceArea.X;
+        }
+
+        if (resultX < 0) {
+            resultX = 0;
+        }
+
+        if (resultY > this.surfaceArea.Y) {
+            resultY = this.surfaceArea.Y;
+        }
+
+        if (resultY < 0) {
+            resultY = 0;
+        }
+
+        this.x = resultX;
+        this.y = resultY;
     }
 
     turnLeft(turnCount = 1) {
