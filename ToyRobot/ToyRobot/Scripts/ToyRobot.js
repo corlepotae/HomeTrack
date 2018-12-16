@@ -11,13 +11,14 @@
 
     executeCommands(commands) {
         var robot = new Robot();
+        var result = '';
         robot.setSurfaceArea(this.surfaceArea.minX, this.surfaceArea.maxX, this.surfaceArea.minY, this.surfaceArea.maxY);
         if (commands instanceof Array) {
             for (var command of commands) {
-                robot.executeCommand(command);
+                result = robot.executeCommand(command);
             }
         }
-        return robot.report();
+        return result;
     }
 }
 
@@ -74,8 +75,7 @@ class Robot {
                     this.turnRight();
                     break;
                 case "REPORT":
-                    this.report();
-                    break;
+                    return this.report();
             };
         }
     }

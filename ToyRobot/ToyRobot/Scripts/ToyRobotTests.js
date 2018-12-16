@@ -34,11 +34,12 @@ var InvalidSetupHandlingTests = [
 describe("ToyRobot should", function () {
     it("turn correctly", function () {
         for (var test of TurningTests) {
+            var result = '';
             robot = new Robot();
             // Set max surface area
             robot.setSurfaceArea(0, 4, 0, 4);
             for (var item of test.input) {
-                robot.executeCommand(item);
+                result = robot.executeCommand(item);
             }
             expect(Robot.Direction.GetName(robot.f)).toBe(test.expected);
         }
@@ -60,32 +61,34 @@ describe("ToyRobot should", function () {
             // Set max surface area
             robot.setSurfaceArea(test.surfaceArea.minX, test.surfaceArea.maxX, test.surfaceArea.minY, test.surfaceArea.maxY);
             for (var item of test.input) {
-                robot.executeCommand(item);
+                result = robot.executeCommand(item);
             }
             expect(robot.report()).toBe(test.expected);
         }
     });
     it("follow valid inputs correctly", function () {
         for (var test of ValidInputHandlingTests) {
+            var result = '';
             robot = new Robot();
             // Set max surface area
             robot.setSurfaceArea(0, 4, 0, 4);
             for (var item of test.input) {
-                robot.executeCommand(item);
+                result = robot.executeCommand(item);
             }
-            expect(robot.report()).toBe(test.expected);
+            expect(result).toBe(test.expected);
         }
     });
     it("handle invalid inputs correctly", function () {
         for (var test of InvalidSetupHandlingTests) {
+            var result = '';
             robot = new Robot();
             // Set max surface area
             robot.setSurfaceArea(test.surfaceArea.minX, test.surfaceArea.maxX, test.surfaceArea.minY, test.surfaceArea.maxY);
             console.log(robot.surfaceArea);
             for (var item of test.input) {
-                robot.executeCommand(item);
+                result = robot.executeCommand(item);
             }
-            expect(robot.report()).toBe(test.expected);
+            expect(result).toBe(test.expected);
         }
     });
 });
