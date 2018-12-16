@@ -1,0 +1,42 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2036
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "ToyRobot", "ToyRobot\", "{40F6C533-E2CB-413A-85C1-D798ED645B1C}"
+	ProjectSection(WebsiteProperties) = preProject
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.7.1"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_56002"
+		Debug.AspNetCompiler.PhysicalPath = "ToyRobot\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_56002\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_56002"
+		Release.AspNetCompiler.PhysicalPath = "ToyRobot\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_56002\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "56002"
+		SlnRelativePath = "ToyRobot\"
+		DefaultWebSiteLanguage = "Visual C#"
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{40F6C533-E2CB-413A-85C1-D798ED645B1C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{40F6C533-E2CB-413A-85C1-D798ED645B1C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F3770CA3-3DD7-40E7-A984-0C8FA10DDF11}
+	EndGlobalSection
+EndGlobal
