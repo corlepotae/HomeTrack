@@ -1,5 +1,8 @@
 # HomeTrack
+
+*******Concrete Classes*******
 The solution includes 2 main classes;
+File Location : ToyRobot\ToyRobot\Scripts\ToyRobot.js
 
 Robot 
 	- The concrete robot class that implements all the movement functionalities.
@@ -20,4 +23,6 @@ The Robot class can be used by itself. However, the setSurfaceArea() function ha
 
 The RobotManager class can be used to simplify the process by taking multiple commands in one call using executeCommands() function in order to achieve the same result as using the Robot class to take command one by one.
 
+*******Tests*******
+File Location : ToyRobot\ToyRobot\Scripts\ToyRobotTests.js
 The unit tests are done using Jasmine framework. To run the unit tests, please run the project to view the result on a browser.
